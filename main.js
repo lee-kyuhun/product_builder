@@ -87,7 +87,7 @@ class LottoGenerator extends HTMLElement {
         }
       </style>
       <div>
-        <button class="theme-toggle">Toggle Theme</button>
+        <button class="theme-toggle"></button>
         <h1>Lotto Number Generator</h1>
         <div class="lotto-numbers"></div>
         <button class="generate">Generate Numbers</button>
@@ -102,6 +102,16 @@ class LottoGenerator extends HTMLElement {
     const savedTheme = localStorage.getItem('theme') || 'light';
     this.setAttribute('theme', savedTheme);
     document.body.setAttribute('data-theme', savedTheme);
+    this.updateThemeButton(savedTheme);
+  }
+
+  updateThemeButton(theme) {
+    const themeToggleButton = this.shadowRoot.querySelector('.theme-toggle');
+    if (theme === 'dark') {
+      themeToggleButton.textContent = 'Light Mode ☀️';
+    } else {
+      themeToggleButton.textContent = 'Dark Mode 🌙';
+    }
   }
 
   toggleTheme() {
@@ -110,6 +120,7 @@ class LottoGenerator extends HTMLElement {
     this.setAttribute('theme', newTheme);
     document.body.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
+    this.updateThemeButton(newTheme);
   }
 
   generateNumbers() {
